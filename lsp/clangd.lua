@@ -1,0 +1,6 @@
+return {
+    cmd = {
+        "clangd",
+        "--target=x86_64-w64-windows-gnu"
+    },
+}
