@@ -15,9 +15,9 @@ map("n", "s^", ":sp<CR>", opt)
 map("n", "sc", "<C-w>c", opt) -- close now
 map("n", "so", "<C-w>o", opt) -- close others
 
-map("n", "s+", ":vertical resize +20<CR>", opt)
+map("n", "s=", ":vertical resize +20<CR>", opt)
 map("n", "s-", ":vertical resize -20<CR>", opt)
-map("n", "s=", "<C-w>=", opt)
+--map("n", "s=", "<C-w>=", opt)
 map("n", "sj", ":resize +10<CR>",opt)
 map("n", "sk", ":resize -10<CR>",opt)
 
@@ -28,6 +28,9 @@ map("n", "<A-l>", "<C-w>l", opt)
 
 -- Lazy
 map("n", "<leader>l", ":Lazy<CR>", opt)
+
+-- Mason
+map("n", "<leader>m", ":Mason<CR>", opt)
 
 -- Telescope
 map("n", "<C-p>", ":Telescope find_files<CR>", opt)

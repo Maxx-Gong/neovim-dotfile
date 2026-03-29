@@ -7,7 +7,7 @@ return {
                 open_mapping = [[<c-\>]],
                 start_in_insert = true,
                 direction = 'float', -- | 'vertical' | 'horizontal' | 'tab' | 'float' |
-                shell = 'pwsh -Nologo',
+                shell = 'fish',
                 float_opts = {
                     -- The border key is *almost* the same as 'nvim_open_win'
                     -- see :h nvim_open_win for details on borders however

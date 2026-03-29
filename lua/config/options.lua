@@ -27,3 +27,7 @@ opt.splitbelow = true
 opt.ignorecase = true
 opt.smartcase = true
 
+-- encoding
+vim.o.encoding = "utf-8"
+vim.o.fileencodings = "utf-8,gbk,big5,cp936,gb18030,euc-jp,euc-kr,latin1,ucs-bom,ucs"
+
