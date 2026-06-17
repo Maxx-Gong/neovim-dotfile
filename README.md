@@ -16,8 +16,11 @@ Just clone this repo and copy it to your nvim config folder.
 # Structure
 
 `lsp/` for LSP config;
+
 `lua/config/` for neovim detailed config;
+
 `lua/plugins/` for plugins config and keybindings;
+
 `init.lua` for core config call.
 
 # Keybindings

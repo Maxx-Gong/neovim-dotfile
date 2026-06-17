@@ -7,9 +7,6 @@ return {
             "hrsh7th/cmp-buffer",
             "hrsh7th/cmp-path",
             "hrsh7th/cmp-cmdline",
-            -- For vsnip
-            "hrsh7th/cmp-vsnip",
-            "hrsh7th/vim-vsnip",
             -- For latex_symbols
             "kdheepak/cmp-latex-symbols",
         },
@@ -18,38 +15,36 @@ return {
             local lspkind = require('lspkind')
 
             cmp.setup {
-                snippet = {
-                    -- Use vsnip
-                    expand = function(args)
-                        vim.fn["vsnip#anonymous"](args.body)
-                    end,
-                },
                 window = {
-                    completion = { border = 'rounded' },
-                    documentation = { border = 'rounded'} ,
+                    completion = { border = 'rounded', },
+                    documentation = { border = 'rounded', },
                 },
                 mapping = cmp.mapping.preset.insert({
-                    -- [KEY_BINDING]
-                    ['<M-Enter>'] = cmp.mapping.complete(), -- Display
-                    ['<M-e>'] = cmp.mapping.abort(), -- Cancel
-                    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept
+                    ['<C-b>'] = cmp.mapping.scroll_docs(-4),
+                    ['<C-f>'] = cmp.mapping.scroll_docs(4),
+                    ['<C-Space>'] = cmp.mapping.complete(),
+                    ['<C-e>'] = cmp.mapping.abort(),
+                    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept currently selected item. Set `select` to `false` to only confirm explicitly selected items.
                 }),
                 sources = cmp.config.sources({
                     { name = 'nvim_lsp' },
                     { name = 'nvim_lua' },
-                    { name = 'vsnip' },
                     { name = 'path' },
-                    { name = "latex_symbols" },
+                    {
+                        name = "latex_symbols",
+                        option = {
+                            strategy = 0, -- mixed
+                        },
+                    },
                     { name = 'buffer' },
                 }),
                 formatting = {
                     fields = { 'abbr', 'icon', 'kind', 'menu' },
                     format = lspkind.cmp_format({
                         menu = ({
-                            buffer = "[Buffer]",
-                            nvim_lsp = "[LSP]",
-                            luasnip = "[LuaSnip]",
-                            nvim_lua = "[Lua]",
+                            buffer =        "[Buffer]",
+                            nvim_lsp =      "[LSP]",
+                            nvim_lua =      "[Lua]",
                             latex_symbols = "[Latex]",
                         }),
                         maxwidth = {
