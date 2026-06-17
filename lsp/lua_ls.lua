@@ -1,3 +1,4 @@
+-- lsp/lua_ls.lua
 return {
     on_init = function(client)
     if client.workspace_folders then

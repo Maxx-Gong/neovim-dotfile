@@ -32,6 +32,7 @@ return {
                         "                                          ",
                     }, --your header
                     center = {
+                        -- [KEY_BINDING]
                         {
                             icon = '󰈞 ',
                             icon_hl = 'Title',

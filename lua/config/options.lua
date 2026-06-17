@@ -15,6 +15,7 @@ opt.wrap = false;
 
 -- enable mouse
 opt.mouse:append("a")
+vim.opt.mousescroll = "ver:3,hor:6"
 
 -- clipboard
 opt.clipboard:append("unnamedplus")

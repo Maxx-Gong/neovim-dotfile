@@ -37,11 +37,8 @@ map("n", "<C-p>", ":Telescope find_files<CR>", opt)
 map("n", "<leader>f", ":Telescope find_files<CR>", opt)
 map("n", "<leader>g", ":Telescope live_grep<CR>", opt)
 
--- local plugin_keys = {}
--- plugin_keys.toggleterm {
---     open_mapping = [[<c-\>]],
--- }
---
--- require("plugins.toggleterm").setup {
---     open_mapping = [[<c-\>]],
--- }
+-- Diffview
+map("n", "<leader>do", ":DiffviewOpen<CR>", opt)
+map("n", "<leader>dc", ":DiffviewClose<CR>", opt)
+map("n", "<leader>dh", ":DiffviewFileHistory<CR>", opt)
+map("n", "<leader>dl", ":DiffviewLog<CR>", opt)

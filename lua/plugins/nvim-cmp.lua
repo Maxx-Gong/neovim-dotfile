@@ -1,108 +1,103 @@
 return {
     {
-	"hrsh7th/nvim-cmp",
-	dependencies = {
-	    "neovim/nvim-lspconfig",
-	    "hrsh7th/cmp-nvim-lsp",
-	    "hrsh7th/cmp-buffer",
-	    "hrsh7th/cmp-path",
-	    "hrsh7th/cmp-cmdline",
-	    "hrsh7th/cmp-vsnip",
-	    "hrsh7th/vim-vsnip",
-	    "kdheepak/cmp-latex-symbols",
-	    "lukas-reineke/cmp-under-comparator",
-	},
-	config = function()
-	    local cmp = require("cmp")
-	    local lspkind = require('lspkind')
-	    cmp.setup
-	    {
-		snippet = {
-		    -- REQUIRED - you must specify a snippet engine
-		    expand = function(args)
-			vim.fn["vsnip#anonymous"](args.body) -- For `vsnip` users.
-		    end,
-		},
-		window = {
-		    completion = cmp.config.window.bordered(),
-		    documentation = cmp.config.window.bordered(),
-		},
-		sorting = {
-		    comparators = {
-			cmp.config.compare.offset,
-			cmp.config.compare.exact,
-			cmp.config.compare.score,
-			require "cmp-under-comparator".under,
-			cmp.config.compare.kind,
-			cmp.config.compare.sort_text,
-			cmp.config.compare.length,
-			cmp.config.compare.order,
-		    },
-		},
-		mapping = cmp.mapping.preset.insert({
-		    -- 上一个
-		    ['<C-k>'] = cmp.mapping.select_prev_item(),
-		    -- 下一个
-		    ['<C-j>'] = cmp.mapping.select_next_item(),
-		    -- 出现补全
-		    ['<C-Space'] = cmp.mapping(cmp.mapping.complete(), { 'i', 'c' }),
-		    -- 取消
-		    ['<C-e>'] = cmp.mapping({
-			i = cmp.mapping.abort(),
-			c = cmp.mapping.close(),
-		    }),
-		    -- 确认
-		    ['<CR>'] = cmp.mapping.confirm({
-			select = true ,
-			behavior = cmp.ConfirmBehavior.Replace
-		    }),
-		}),
-		sources = cmp.config.sources({
-		    { name = 'nvim_lsp' },
-		    { name = 'nvim_lua' },
-		    { name = 'vsnip' }, -- For vsnip users.
-		    { name = 'buffer' },
-		    {
-			name = "latex_symbols",
-			option = {
-			    strategy = 0, -- mixed
-			},
-		    },
-		}),
-		formatting = {
-		    format = lspkind.cmp_format({
-			with_text = true, -- do not show text alongside icons
-			maxwidth = 50,
-			before = function (entry, vim_item)
-			    vim_item.menu = "["..string.upper(entry.source.name).."]"
-			    return vim_item
-			end
-		    })
-		},
-	    }
+        "hrsh7th/nvim-cmp",
+        dependencies = {
+            "neovim/nvim-lspconfig",
+            "hrsh7th/cmp-nvim-lsp",
+            "hrsh7th/cmp-buffer",
+            "hrsh7th/cmp-path",
+            "hrsh7th/cmp-cmdline",
+            -- For vsnip
+            "hrsh7th/cmp-vsnip",
+            "hrsh7th/vim-vsnip",
+            -- For latex_symbols
+            "kdheepak/cmp-latex-symbols",
+        },
+        config = function()
+            local cmp = require("cmp")
+            local lspkind = require('lspkind')
 
-	    cmp.setup.filetype('gitcommit', {
-		sources = cmp.config.sources({
-		    { name = 'git'},
-		}, {
-		    { name = 'buffer' },
-		})
-	    })
-	    -- Use buffer source for `/`.
-	    cmp.setup.cmdline('/', {
-		sources = {
-		    { name = 'buffer' }
-		}
-	    })
+            cmp.setup {
+                snippet = {
+                    -- Use vsnip
+                    expand = function(args)
+                        vim.fn["vsnip#anonymous"](args.body)
+                    end,
+                },
+                window = {
+                    completion = { border = 'rounded' },
+                    documentation = { border = 'rounded'} ,
+                },
+                mapping = cmp.mapping.preset.insert({
+                    -- [KEY_BINDING]
+                    ['<M-Enter>'] = cmp.mapping.complete(), -- Display
+                    ['<M-e>'] = cmp.mapping.abort(), -- Cancel
+                    ['<CR>'] = cmp.mapping.confirm({ select = true }), -- Accept
+                }),
+                sources = cmp.config.sources({
+                    { name = 'nvim_lsp' },
+                    { name = 'nvim_lua' },
+                    { name = 'vsnip' },
+                    { name = 'path' },
+                    { name = "latex_symbols" },
+                    { name = 'buffer' },
+                }),
+                formatting = {
+                    fields = { 'abbr', 'icon', 'kind', 'menu' },
+                    format = lspkind.cmp_format({
+                        menu = ({
+                            buffer = "[Buffer]",
+                            nvim_lsp = "[LSP]",
+                            luasnip = "[LuaSnip]",
+                            nvim_lua = "[Lua]",
+                            latex_symbols = "[Latex]",
+                        }),
+                        maxwidth = {
+                          -- prevent the popup from showing more than provided characters (e.g 50 will not show more than 50 characters)
+                          -- can also be a function to dynamically calculate max width such as
+                          -- menu = function() return math.floor(0.45 * vim.o.columns) end,
+                          abbr = 30, -- actual suggestion item
+                          menu = 20, -- leading text (labelDetails)
+                        },
+                        ellipsis_char = '...', -- when popup menu exceed maxwidth, the truncated part would show ellipsis_char instead (must define maxwidth first)
+                        show_labelDetails = true, -- show labelDetails in menu. Disabled by default
 
-	    -- Use cmdline & path source for ':'.
-	    cmp.setup.cmdline(':', {
-		sources = cmp.config.sources({
-		    { name = 'path' }
-		}, {
-		    { name = 'cmdline' }
-		})
-	    })
-	end
+                        -- The function below will be called before any actual modifications from lspkind
+                        -- so that you can provide more controls on popup customization. (See [#30](https://github.com/onsails/lspkind-nvim/pull/30))
+                        before = function (entry, vim_item)
+                          -- ...
+                          return vim_item
+                        end
+                    })
+                }
+            }
+
+            -- Use buffer source for `/`.
+            cmp.setup.cmdline({ '/', '?' }, {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = {
+                    { name = 'buffer' }
+                }
+            })
+
+            -- Use cmdline & path source for ':'.
+            cmp.setup.cmdline(':', {
+                mapping = cmp.mapping.preset.cmdline(),
+                sources = cmp.config.sources({
+                  { name = 'path' }
+                }, {
+                  { name = 'cmdline' }
+                }),
+                matching = { disallow_symbol_nonprefix_matching = false }
+            })
+
+            -- Set up lspconfig.
+            local capabilities = require('cmp_nvim_lsp').default_capabilities()
+            -- Replace <YOUR_LSP_SERVER> with each lsp server you've enabled.
+            vim.lsp.config('<YOUR_LSP_SERVER>', {
+              capabilities = capabilities
+            })
+            vim.lsp.enable('<YOUR_LSP_SERVER>')
+        end
     }
 }

@@ -48,6 +48,7 @@ return {
 			},
 
 			-- Set to `false` to disable
+            -- [KEY_BINDING]
 			mappings = {
 			    n = {
 				["q"] = "Close",
