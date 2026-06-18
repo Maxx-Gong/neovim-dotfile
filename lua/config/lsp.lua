@@ -5,10 +5,10 @@ vim.diagnostic.config {
   underline = { severity = vim.diagnostic.severity.ERROR },
   signs = {
     text = {
-      [vim.diagnostic.severity.ERROR] = "✗", -- 这里配置“错误”的图标，需要nerd font字体
-      [vim.diagnostic.severity.WARN] = "W",
-      [vim.diagnostic.severity.INFO] = "I",
-      [vim.diagnostic.severity.HINT] = "H",
+      [vim.diagnostic.severity.ERROR] = "✗",
+      [vim.diagnostic.severity.WARN]  = "W",
+      [vim.diagnostic.severity.INFO]  = "I",
+      [vim.diagnostic.severity.HINT]  = "H",
     },
   },
   virtual_text = {

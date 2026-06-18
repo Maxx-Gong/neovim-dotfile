@@ -13,9 +13,12 @@ opt.autoindent = true
 -- warp
 opt.wrap = false;
 
+-- rounded border
+opt.winborder = 'rounded'
+
 -- enable mouse
 opt.mouse:append("a")
-vim.opt.mousescroll = "ver:3,hor:6"
+opt.mousescroll = "ver:3,hor:6"
 
 -- clipboard
 opt.clipboard:append("unnamedplus")
@@ -29,6 +32,6 @@ opt.ignorecase = true
 opt.smartcase = true
 
 -- encoding
-vim.o.encoding = "utf-8"
-vim.o.fileencodings = "utf-8,gbk,big5,cp936,gb18030,euc-jp,euc-kr,latin1,ucs-bom,ucs"
+opt.encoding = "utf-8"
+opt.fileencodings = "utf-8,gbk,big5,cp936,gb18030,euc-jp,euc-kr,latin1,ucs-bom,ucs"
 
