@@ -28,4 +28,4 @@ Just clone this repo and copy it to your nvim config folder.
 `lua/config/keybindings.lua` is for nvim keybindings.
 
 There are multiple keybindings in the `lua/plugins/.` in order to maintain simple.
-You can find them by using <Leader>g to search `[KEY_BINDING]`.
+You can find them by typing `<Leader>g` or `:Telescope live_grep<CR>` to search `[KEY_BINDING]`.

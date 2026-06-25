@@ -11,7 +11,9 @@ opt.expandtab = true
 opt.autoindent = true
 
 -- warp
-opt.wrap = false;
+opt.wrap = false
+
+opt.showmode = false
 
 -- rounded border
 opt.winborder = 'rounded'

@@ -1,6 +1,8 @@
 return {
     {
         "hrsh7th/nvim-cmp",
+        -- Load cmp on InsertEnter
+        event = "InsertEnter",
         dependencies = {
             "neovim/nvim-lspconfig",
             "hrsh7th/cmp-nvim-lsp",

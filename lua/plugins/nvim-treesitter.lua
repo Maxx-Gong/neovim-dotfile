@@ -1,40 +1,35 @@
 return {
     {
-        'nvim-treesitter/nvim-treesitter',
-        lazy = false,
-        build = ':TSUpdate',
-        config = function ()
-            require'nvim-treesitter'.setup {
-                -- 安装 language parser
-                -- :TSInstallInfo 命令查看支持的语言
-                ensure_installed = {"html", "vim", "lua", "c", "cpp", "python", "rust"},
-                -- 启用代码高亮功能
-                highlight = {
-                    enable = true,
-                    additional_vim_regex_highlighting = false
-                },
-                -- 启用增量选择
-                incremental_selection = {
-                    enable = true,
-                    keymaps = {
-                        init_selection = '<CR>',
-                        node_incremental = '<CR>',
-                        node_decremental = '<BS>',
-                        scope_incremental = '<TAB>',
-                    }
-                },
-                -- 启用基于Treesitter的代码格式化(=) . NOTE: This is an experimental feature.
-                indent = {
-                    enable = true
-                }
-            }
-            -- 开启 Folding
-            vim.wo.foldmethod = 'expr'
-            vim.wo.foldexpr = 'nvim_treesitter#foldexpr()'
-            -- 默认不要折叠
-            -- https://stackoverflow.com/questions/8316139/how-to-set-the-default-to-unfolded-when-you-open-a-file
-            vim.wo.foldlevel = 99
-        end
+        "nvim-treesitter/nvim-treesitter",
+        branch = "main",
+        event = "VeryLazy",
+        build = ":TSUpdate",
+        config = function()
+            local nvim_treesitter = require "nvim-treesitter"
+            nvim_treesitter.setup()
+
+            local ensure_installed = { "lua", "toml" }
+            local pattern = {}
+            for _, parser in ipairs(ensure_installed) do
+                -- 找不到这个 parser 会报错
+                local has_parser, _ = pcall(vim.treesitter.language.inspect, parser)
+
+                if not has_parser then
+                    -- install 是 nvim-treesitter 的新 api，默认情况下无论是否安装 parser 都会执行，所以这里我们做一个判断
+                    nvim_treesitter.install(parser)
+                else
+                    -- 新版本需要手动启动高亮，但没有安装相应 parser会导致报错
+                    pattern = vim.tbl_extend("keep", pattern, vim.treesitter.language.get_filetypes(parser))
+                end
+            end
+            vim.api.nvim_create_autocmd("FileType", {
+                pattern = pattern,
+                callback = function()
+                    vim.treesitter.start()
+                end,
+            })
+            -- VeryLazy 晚于 FileType，所以需要手动触发一下
+            vim.api.nvim_exec_autocmds("FileType", {})
+        end,
     }
 }
-

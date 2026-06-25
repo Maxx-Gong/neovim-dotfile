@@ -37,6 +37,9 @@ map("n", "<leader>m", ":Mason<CR>", { desc = "Open Mason" })
 map("n", "<leader>f", ":Telescope find_files<CR>", { desc = "Find files" })
 map("n", "<leader>g", ":Telescope live_grep<CR>",  { desc = "Find codes" })
 
+-- Tree
+map('n', "<leader>e", ":NvimTreeToggle<CR>", { desc = "Open tree" })
+
 -- Diffview
 map("n", "<leader>do", ":DiffviewOpen<CR>", { desc = "Open Diffview" })
 map("n", "<leader>dc", ":DiffviewClose<CR>", { desc = "Close Diffview" })
