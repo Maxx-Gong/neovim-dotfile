@@ -1,5 +1,11 @@
+-- KEYMAPS
+-- Set <space> as the leader key
+-- See `:h mapleader`
+-- NOTE: Must happen before plugins are loaded (otherwise wrong leader will be used)
 vim.g.mapleader = " "
 vim.g.maplocalleader = " "
+
+-- See `:h vim.keymap.set()`, `:h mapping`, `:h keycodes`
 
 local map = vim.keymap.set
 local del = vim.keymap.del
@@ -9,23 +15,15 @@ map("n", "<c-k>", "15k", { desc = "Move 15 up" })
 map("n", "<c-j>", "15j", { desc = "Move 15 down" })
 
 -- Buffer
-map("n", "s", "", { desc = "Cancel normal function" })
-
-map("n", "s>", ":vsp<CR>", { desc = "Split buffer to the right" })
-map("n", "s^", ":sp<CR>",  { desc = "Split buffer to the top" })
-
-map("n", "sc", "<C-w>c", { desc = "Close current buffer" })
-map("n", "so", "<C-w>o", { desc = "Close others" })
-
-map("n", "s=", ":vertical resize +20<CR>", { desc = "Expand buffer width" })
-map("n", "s-", ":vertical resize -20<CR>", { desc = "Reduce buffer width" })
-map("n", "sj", ":resize +10<CR>", { desc = "Expand buffer height" })
-map("n", "sk", ":resize -10<CR>", { desc = "Reduce buffer height" })
-
 map("n", "<A-h>", "<C-w>h", { desc = "Focus left"  })
 map("n", "<A-j>", "<C-w>j", { desc = "Focus down"  })
 map("n", "<A-k>", "<C-w>k", { desc = "Focus up"    })
 map("n", "<A-l>", "<C-w>l", { desc = "Focus right" })
+
+map("n", "<C-w>=", "5<C-w>+", { desc = "Increase buffer height" })
+map("n", "<C-w>-", "5<C-w>-", { desc = "Decrease buffer height" })
+map("n", "<C-w>.", "5<C-w>>", { desc = "Increase buffer height" })
+map("n", "<C-w>,", "5<C-w><", { desc = "Decrease buffer height" })
 
 -- Lazy
 map("n", "<leader>l", ":Lazy<CR>", { desc = "Open Lazy" })
